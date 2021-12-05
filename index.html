@@ -366,6 +366,193 @@
 
         
   
+    <article id="post-mybatisPlus"
+  class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/04/mybatisPlus/">mybatisPlus</a>
+    </h1>
+  
+
+          
+            <a href="/2021/12/04/mybatisPlus/" class="archive-article-date">
+  	<time datetime="2021-12-04T11:51:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-04</time>
+</a>
+              
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+            <hr>
+<h1 id="MyBatisPlus介绍"><a href="#MyBatisPlus介绍" class="headerlink" title="MyBatisPlus介绍"></a>MyBatisPlus介绍</h1><p><strong>mybatis本来就是简化jdbc操作的！mybatisPlus是简化mybatis的！</strong></p>
+<p><strong>官网：<a target="_blank" rel="noopener" href="http://mp.baomidou.com/">http://mp.baomidou.com/</a></strong></p>
+<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>引入<code>mybatis-plus-boot-starter</code>依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用3.0.5版本就好，可以学到更多的源码</li>
+<li>注意：不要同时使用mybatisPlus和mybatis，可能会有版本的差异！</li>
+</ul>
+              
+                  
+                        
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">springboot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+                
+
+                  
+                    <p class="article-more-link">
+                      <a class="article-more-a" href="/2021/12/04/mybatisPlus/">
+                        展开全文 >>
+                      </a>
+                    </p>
+                    
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+  
+    <article id="post-java使用jdbc"
+  class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/04/java%E4%BD%BF%E7%94%A8jdbc/">java使用jdbc</a>
+    </h1>
+  
+
+          
+            <a href="/2021/12/04/java%E4%BD%BF%E7%94%A8jdbc/" class="archive-article-date">
+  	<time datetime="2021-12-04T03:49:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-04</time>
+</a>
+              
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+            <hr>
+<hr>
+<h1 id="准备和步骤"><a href="#准备和步骤" class="headerlink" title="准备和步骤"></a>准备和步骤</h1><blockquote>
+<p>需要jar包：</p>
+</blockquote>
+<ul>
+<li>mysql-connector-java</li>
+</ul>
+<blockquote>
+<p>步骤：</p>
+</blockquote>
+<ol>
+<li>导入jar包</li>
+<li>使用class.forname(“com.mysql.cj.jdbc.Drive”)注册驱动类</li>
+<li>获取conn对象，并使用prepareStatement装入sql语句</li>
+<li>使用pre对应方法执行</li>
+</ol>
+              
+                  
+                        
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">jdbc</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+                
+
+                  
+                    <p class="article-more-link">
+                      <a class="article-more-a" href="/2021/12/04/java%E4%BD%BF%E7%94%A8jdbc/">
+                        展开全文 >>
+                      </a>
+                    </p>
+                    
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+  
     <article id="post-docker镜像部署python"
   class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1058,180 +1245,6 @@
 
         
   
-    <article id="post-socketio实现双向通信"
-  class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/22/socketio%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1/">socketio实现双向通信</a>
-    </h1>
-  
-
-          
-            <a href="/2021/09/22/socketio%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1/" class="archive-article-date">
-  	<time datetime="2021-09-22T12:37:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-22</time>
-</a>
-              
-      </header>
-      
-        <div class="article-entry" itemprop="articleBody">
-          
-            <hr>
-<h1 id="原生使用socketio写法"><a href="#原生使用socketio写法" class="headerlink" title="原生使用socketio写法"></a>原生使用socketio写法</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>websocket是html5中实现了服务端和客户端进行双向文本或二进制数据通信的一种新协议，其实已经低于HTTP协议本身和HTTP本质上没有什么关系了。不过形式上两者还是有想象之处。因此websocket的连接地址是长这样的：ws://localhost:8080。可以看到，协议修饰符不是http了。</p>
-<p>另外，websocket在连接建立阶段是通过HTTP的握手方式进行的，这可以看做是为了兼容浏览器或者使用一些现成的功能来实现，这样一种捷径。当连接建立之后，客户端和服务端之间就不再进行HTTP通信了，所有信息交互都由websocket接管。</p>
-<p>从资源占用的角度上来说，其实websocket比ajax占用的资源更多，但它真正实现了全双工通信这一点还是很理想的，意味着无论是前端还是后台的信息交互程序编写都会变得更加方便。由于采用了新的协议，所以我们也需要适当地改造下前后台的程序。</p>
-              
-                  
-                        
-        </div>
-        <div class="article-info article-info-index">
-          
-              
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SocketIO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-                
-
-                  
-                    <p class="article-more-link">
-                      <a class="article-more-a" href="/2021/09/22/socketio%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1/">
-                        展开全文 >>
-                      </a>
-                    </p>
-                    
-
-                      
-                            <div class="clearfix"></div>
-        </div>
-  </div>
-</article>
-
-      <aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-        
-  
-    <article id="post-原生sio服务"
-  class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/21/%E5%8E%9F%E7%94%9Fsio%E6%9C%8D%E5%8A%A1/">原生sio</a>
-    </h1>
-  
-
-          
-            <a href="/2021/09/21/%E5%8E%9F%E7%94%9Fsio%E6%9C%8D%E5%8A%A1/" class="archive-article-date">
-  	<time datetime="2021-09-21T14:39:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-21</time>
-</a>
-              
-      </header>
-      
-        <div class="article-entry" itemprop="articleBody">
-          
-            <hr>
-<h1 id="sio简介"><a href="#sio简介" class="headerlink" title="sio简介"></a>sio简介</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Socket.IO是一个面向实时web应用的JavaScript库，现在已成为拥有众多语言支持的web即时通讯应用的框架。</p>
-<blockquote>
-<p>注意：</p>
-</blockquote>
-<p>Socket.IO不等价于websocket，websocket只是Socket.IO实现即时通讯的其中一种技术依赖，而且Socket.IO还在实现websocket协议时做了一些调整</p>
-              
-                  
-                        
-        </div>
-        <div class="article-info article-info-index">
-          
-              
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">WebSocket</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-                
-
-                  
-                    <p class="article-more-link">
-                      <a class="article-more-a" href="/2021/09/21/%E5%8E%9F%E7%94%9Fsio%E6%9C%8D%E5%8A%A1/">
-                        展开全文 >>
-                      </a>
-                    </p>
-                    
-
-                      
-                            <div class="clearfix"></div>
-        </div>
-  </div>
-</article>
-
-      <aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-        
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1323,7 +1336,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
         </div>
           <nav style="margin:20px 0 0 20px;color:rgb(77, 89, 100);">
-            <span>总文章数： <strong>62</strong></span>
+            <span>总文章数： <strong>64</strong></span>
           </nav>
         <div class="widget tagcloud search-tag">
           <p class="search-tag-wording">tag:</p>
@@ -1574,6 +1587,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">jdbc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
               </li>
             
             <div class="clearfix"></div>
