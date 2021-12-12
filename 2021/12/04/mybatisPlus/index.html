@@ -16,7 +16,7 @@
 <meta property="og:description" content="MyBatisPlus介绍mybatis本来就是简化jdbc操作的！mybatisPlus是简化mybatis的！ 官网：http:&#x2F;&#x2F;mp.baomidou.com&#x2F; 快速入门添加依赖引入mybatis-plus-boot-starter依赖： 12345&lt;dependency&gt;    &lt;groupId&gt;com.baomidou&lt;&#x2F;groupId&gt;    &amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-04T11:51:27.000Z">
-<meta property="article:modified_time" content="2021-12-07T17:12:20.646Z">
+<meta property="article:modified_time" content="2021-12-09T15:08:33.577Z">
 <meta property="article:author" content="FSAN-san">
 <meta property="article:tag" content="mysql">
 <meta property="article:tag" content="mybatis">
@@ -437,10 +437,73 @@
 <p>注意：在执行更新操作的时候先使用查询获取对应的model对象，再作修改</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testVersion</span><span class="params">()</span></span>&#123;</span><br><span class="line">    loginUser loginUser = userMapper.selectById(<span class="number">1</span>);</span><br><span class="line">    loginUser.setId(<span class="number">1</span>);</span><br><span class="line">    loginUser.setUsername(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">    userMapper.updateById(loginUser);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<br>
 
+<h2 id="条件构造器"><a href="#条件构造器" class="headerlink" title="条件构造器"></a>条件构造器</h2><p>十分重要：Wrapper</p>
+<blockquote>
+<p>根据用户名和密码不为空并且版本号大于等于0的查询</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    QueryWrapper&lt;DelPlus&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper</span><br><span class="line">        .isNotNull(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">        .isNotNull(<span class="string">&quot;password&quot;</span>)</span><br><span class="line">        .ge(<span class="string">&quot;version&quot;</span>, <span class="number">0</span>);</span><br><span class="line">    userMapper.selectList(wrapper).forEach(System.out::println);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<br>
 
+<blockquote>
+<p>各逻辑判断符：</p>
+</blockquote>
+<p><strong>ne</strong></p>
+<ul>
+<li>不等于 &lt;&gt;</li>
+<li>例：ne(“name”, “张三”) —&gt; name &lt;&gt; ‘张三’</li>
+</ul>
+<p><strong>gt</strong></p>
+<ul>
+<li>大于 &gt;</li>
+<li>例：gt(“age”, 18) —&gt; age &gt; 18</li>
+</ul>
+<p><strong>ge</strong></p>
+<ul>
+<li>大于等于 &gt;=</li>
+<li>例：ge(“age”, 18) —&gt; age &gt;= 18</li>
+</ul>
+<p><strong>lt</strong></p>
+<ul>
+<li>小于 &lt;</li>
+<li>例：lt(“age”, 18) —&gt; age &lt; 18</li>
+</ul>
+<p><strong>le</strong></p>
+<ul>
+<li>小于等于 &lt;=</li>
+<li>例：le(“age”, 18) —&gt; age &lt;= 18</li>
+</ul>
+<br>
 
+<blockquote>
+<p>查询verison字段1-10的数据</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">demo2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	QueryWrapper&lt;DelPlus&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.between(<span class="string">&quot;version&quot;</span>, <span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line">    System.out.println(userMapper.selectList(wrapper));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<blockquote>
+<p>查询password不包含4和2开头的数据（模糊查询）</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">demo3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	QueryWrapper&lt;DelPlus&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper</span><br><span class="line">        .notLike(<span class="string">&quot;password&quot;</span>, <span class="number">4</span>)</span><br><span class="line">        .likeRight(<span class="string">&quot;password&quot;</span>, <span class="number">2</span>);</span><br><span class="line">    System.out.println(userMapper.selectList(wrapper));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>like 包含这个值的数据</li>
+<li>likeRight和likeLeft的区别 —&gt; where password like 123% —&gt; where password like %123</li>
+</ul>
+<br>
+
+<blockquote>
+<p>sql子查询</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">demo4</span><span class="params">()</span></span>&#123;</span><br><span class="line">	QueryWrapper&lt;DelPlus&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.insql(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;select id from del_plus where id&lt;13&quot;</span>);</span><br><span class="line">    userMapper.selectObjs(wrapper).forEach(System.out::println);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用insql可以指定在条件中指定条件</li>
+<li>熟练运用可以使用较为复杂的逻辑</li>
+</ul>
 <h1 id="雪花算法（snowflake）"><a href="#雪花算法（snowflake）" class="headerlink" title="雪花算法（snowflake）"></a>雪花算法（snowflake）</h1><p>在数据库id字段没有自增的时候，使用insert插入会自动生成一段id，这段id就是由雪花算法生成的。</p>
 <p><strong>snowflake</strong>是Twitter开源的分布式ID生成算法，结果是一个long型的ID。其核心思想是：使用41bit作为毫秒数，10bit作为机器的ID（5bit是数据中心，5bit的机械ID），12bit作为毫秒内的流水号（意味着每个节点在每毫秒可以产生4096个ID），最后还有一个符号位，永远为0。</p>
 <p><strong>让数据库自增的办法：</strong></p>
@@ -578,6 +641,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2021/12/10/java%E6%B3%A8%E8%A7%A3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java注解
+        
+      </div>
+    </a>
+  
   
     <a href="/2021/12/04/java%E4%BD%BF%E7%94%A8jdbc/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">java使用jdbc</div>
@@ -607,7 +679,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MyBatisPlus%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">MyBatisPlus介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">2.</span> <span class="toc-text">快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.</span> <span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.2.</span> <span class="toc-text">使用步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97"><span class="toc-number">3.</span> <span class="toc-text">配置日志</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CRUD%E6%89%A9%E5%B1%95"><span class="toc-number">4.</span> <span class="toc-text">CRUD扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">4.2.</span> <span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4"><span class="toc-number">4.3.</span> <span class="toc-text">逻辑删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="toc-number">4.4.</span> <span class="toc-text">更新数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.5.</span> <span class="toc-text">简单查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.6.</span> <span class="toc-text">分页查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%E5%A4%84%E7%90%86"><span class="toc-number">4.7.</span> <span class="toc-text">自动填充处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-number">4.8.</span> <span class="toc-text">乐观锁</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%EF%BC%88snowflake%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">雪花算法（snowflake）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-number">6.</span> <span class="toc-text">踩坑记录</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MyBatisPlus%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">MyBatisPlus介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">2.</span> <span class="toc-text">快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.</span> <span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.2.</span> <span class="toc-text">使用步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97"><span class="toc-number">3.</span> <span class="toc-text">配置日志</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CRUD%E6%89%A9%E5%B1%95"><span class="toc-number">4.</span> <span class="toc-text">CRUD扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">4.2.</span> <span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4"><span class="toc-number">4.3.</span> <span class="toc-text">逻辑删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="toc-number">4.4.</span> <span class="toc-text">更新数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.5.</span> <span class="toc-text">简单查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.6.</span> <span class="toc-text">分页查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%E5%A4%84%E7%90%86"><span class="toc-number">4.7.</span> <span class="toc-text">自动填充处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-number">4.8.</span> <span class="toc-text">乐观锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-number">4.9.</span> <span class="toc-text">条件构造器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%EF%BC%88snowflake%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">雪花算法（snowflake）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-number">6.</span> <span class="toc-text">踩坑记录</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -712,7 +784,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
         </div>
           <nav style="margin:20px 0 0 20px;color:rgb(77, 89, 100);">
-            <span>总文章数： <strong>64</strong></span>
+            <span>总文章数： <strong>65</strong></span>
           </nav>
         <div class="widget tagcloud search-tag">
           <p class="search-tag-wording">tag:</p>
@@ -975,6 +1047,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">springboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
             
             <div class="clearfix"></div>
