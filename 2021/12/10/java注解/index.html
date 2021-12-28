@@ -16,7 +16,7 @@
 <meta property="og:description" content="注解的介绍Java 注解（Annotation）又称Java标注，是JDK5.0引入的一种注释机制。 Java 语言中的类、方法、变量、参数和包等都可以被标注。和 Javadoc 不同，Java 标注可以通过反射获取标注内容。在编译器生成类文件时，标注可以被嵌入到字节码中。Java 虚拟机可以保留标注内容，在运行时可以获取到标注内容 。 当然它也支持自定义 Java 标注。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-10T10:12:24.000Z">
-<meta property="article:modified_time" content="2021-12-12T07:07:23.416Z">
+<meta property="article:modified_time" content="2021-12-12T14:53:04.860Z">
 <meta property="article:author" content="FSAN-san">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -380,9 +380,22 @@
 <li>设置对象的setAccessible(true)允许直接赋值私有化的属性</li>
 <li>使用属性对象的set方法传入对象和值</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">needForName</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class c3 = Class.forName(<span class="string">&quot;com.fsan.pojo.LoginUser&quot;</span>);</span><br><span class="line">		LoginUser loginUser =(LoginUser) c3.newInstance();</span><br><span class="line">        Field field = c3.getDeclaredField(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(loginUser, <span class="string">&quot;newUsername&quot;</span>);</span><br><span class="line">        System.out.println(loginUser.getUsername);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">needForName</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Class c3 = Class.forName(<span class="string">&quot;com.fsan.pojo.LoginUser&quot;</span>);</span><br><span class="line">		LoginUser loginUser =(LoginUser) c3.newInstance();</span><br><span class="line">        Field field = c3.getDeclaredField(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(loginUser, <span class="string">&quot;newUsername&quot;</span>);</span><br><span class="line">        System.out.println(loginUser.getUsername());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>setAccessible作用是启动和禁用访问安全检查的开关。</li>
+<li>使用true则指示反射的对象在使用时应该取消Java语言访问检查。</li>
+</ul>
+<br>
 
+<blockquote>
+<p>使用反射操作注解：（<strong>重中重</strong>）</p>
+</blockquote>
+<p>自己写的注解如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@interface</span> useDB &#123;</span><br><span class="line">    <span class="function">String <span class="title">url</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">username</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">password</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">drive</span><span class="params">()</span> <span class="keyword">default</span> &quot;com.mysql.cj.jdbc.Driver&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在获取数据的地方提供元数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflctionUseInter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@useDB(url = &quot;XX.XXX.XXX.XXX:3307&quot;, username = &quot;root&quot;, password = &quot;root&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getConn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">            System.out.println(getClass().getDeclaredMethod(<span class="string">&quot;getConn&quot;</span>));</span><br><span class="line">            useDB useDB = ReflctionUseInter.class.getDeclaredMethod(<span class="string">&quot;getConn&quot;</span>).getAnnotation(useDB.class);</span><br><span class="line">            System.out.println(useDB.url());</span><br><span class="line">            System.out.println(useDB.password());</span><br><span class="line">            System.out.println(useDB.username());</span><br><span class="line">            System.out.println(useDB.drive());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
                       
@@ -498,6 +511,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/12/18/media%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E5%99%A8%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          media媒体查询器使用
+        
+      </div>
+    </a>
   
   
     <a href="/2021/12/04/mybatisPlus/" id="article-nav-older" class="article-nav-link-wrap">
@@ -633,7 +655,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
         </div>
           <nav style="margin:20px 0 0 20px;color:rgb(77, 89, 100);">
-            <span>总文章数： <strong>65</strong></span>
+            <span>总文章数： <strong>67</strong></span>
           </nav>
         <div class="widget tagcloud search-tag">
           <p class="search-tag-wording">tag:</p>
@@ -900,6 +922,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
               </li>
             
             <div class="clearfix"></div>

@@ -366,6 +366,184 @@
 
         
   
+    <article id="post-TypeScript基础"
+  class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/26/TypeScript%E5%9F%BA%E7%A1%80/">TypeScript基础</a>
+    </h1>
+  
+
+          
+            <a href="/2021/12/26/TypeScript%E5%9F%BA%E7%A1%80/" class="archive-article-date">
+  	<time datetime="2021-12-26T04:44:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-26</time>
+</a>
+              
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+            <hr>
+<h1 id="准备和认识"><a href="#准备和认识" class="headerlink" title="准备和认识"></a>准备和认识</h1><h2 id="对typescript的认识（自己理解）"><a href="#对typescript的认识（自己理解）" class="headerlink" title="对typescript的认识（自己理解）"></a>对typescript的认识（自己理解）</h2><p>是javascript的超集，使用ts可以减少bug，ts可以编译为js代码</p>
+<h2 id="ts环境准备"><a href="#ts环境准备" class="headerlink" title="ts环境准备"></a>ts环境准备</h2><p>下载ts编译环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install typescript -g</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>tsc -v  查看版本信息</li>
+</ul>
+              
+                  
+                        
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">typescript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+                
+
+                  
+                    <p class="article-more-link">
+                      <a class="article-more-a" href="/2021/12/26/TypeScript%E5%9F%BA%E7%A1%80/">
+                        展开全文 >>
+                      </a>
+                    </p>
+                    
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+  
+    <article id="post-media媒体查询器使用"
+  class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/18/media%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E5%99%A8%E4%BD%BF%E7%94%A8/">media媒体查询器使用</a>
+    </h1>
+  
+
+          
+            <a href="/2021/12/18/media%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E5%99%A8%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2021-12-18T09:10:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-18</time>
+</a>
+              
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+            <hr>
+<h2 id="media媒体查询器准备工作"><a href="#media媒体查询器准备工作" class="headerlink" title="media媒体查询器准备工作"></a>media媒体查询器准备工作</h2><blockquote>
+<p>准备工作一：设置Meta标签</p>
+</blockquote>
+<p>首先在使用media的时候需要先设置下面这段代码，来兼容移动设备的展示效果：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">context</span>=<span class="string">&quot;width=device-width,initial-scale=1.0,maximum-scale=1.0,use-scalable=no&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>width=device-width  宽度等于当前设备的宽度</li>
+<li>initial-scale  初始的默认缩放比例（默认设置为1.0）</li>
+<li>maximum-scale  允许用户缩放到的最大比例（默认设置为1.0）</li>
+<li>minimum-scale  允许用户缩放到的最小比例（默认设置为1.0）</li>
+<li>use-scalable  用户是否可以手动缩放（默认设置为no，因为我们不希望用户放大缩小页面）</li>
+</ul>
+              
+                  
+                        
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">html</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+                
+
+                  
+                    <p class="article-more-link">
+                      <a class="article-more-a" href="/2021/12/18/media%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E5%99%A8%E4%BD%BF%E7%94%A8/">
+                        展开全文 >>
+                      </a>
+                    </p>
+                    
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+  
     <article id="post-java注解"
   class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1060,178 +1238,6 @@
 
         
   
-    <article id="post-vueCli项目新认识"
-  class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/03/vueCli%E9%A1%B9%E7%9B%AE%E6%96%B0%E8%AE%A4%E8%AF%86/">vueCli项目新认识</a>
-    </h1>
-  
-
-          
-            <a href="/2021/10/03/vueCli%E9%A1%B9%E7%9B%AE%E6%96%B0%E8%AE%A4%E8%AF%86/" class="archive-article-date">
-  	<time datetime="2021-10-02T16:24:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-03</time>
-</a>
-              
-      </header>
-      
-        <div class="article-entry" itemprop="articleBody">
-          
-            <hr>
-<h1 id="new-Start"><a href="#new-Start" class="headerlink" title="new Start"></a>new Start</h1><h2 id="结构认识"><a href="#结构认识" class="headerlink" title="结构认识"></a>结构认识</h2><ol>
-<li>显示由view下的文件展示</li>
-<li>在view下的vue文件可以使用components节点导入component下的vue页面</li>
-<li>使用axios之前最好先使用utils和api两个文件夹进行封装，一个管理拦截器和请求头，一个负责暴露接口</li>
-<li>注册vue全局使用的是Vue.prototype</li>
-</ol>
-              
-                  
-                        
-        </div>
-        <div class="article-info article-info-index">
-          
-              
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">VueCli</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-                
-
-                  
-                    <p class="article-more-link">
-                      <a class="article-more-a" href="/2021/10/03/vueCli%E9%A1%B9%E7%9B%AE%E6%96%B0%E8%AE%A4%E8%AF%86/">
-                        展开全文 >>
-                      </a>
-                    </p>
-                    
-
-                      
-                            <div class="clearfix"></div>
-        </div>
-  </div>
-</article>
-
-      <aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-        
-  
-    <article id="post-929对于Mybatis的注意"
-  class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/29/929%E5%AF%B9%E4%BA%8EMybatis%E7%9A%84%E6%B3%A8%E6%84%8F/">929对于Mybatis的注意</a>
-    </h1>
-  
-
-          
-            <a href="/2021/09/29/929%E5%AF%B9%E4%BA%8EMybatis%E7%9A%84%E6%B3%A8%E6%84%8F/" class="archive-article-date">
-  	<time datetime="2021-09-29T09:03:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-29</time>
-</a>
-              
-      </header>
-      
-        <div class="article-entry" itemprop="articleBody">
-          
-                    <hr>
-<h1 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-                      
-                        
-        </div>
-        <div class="article-info article-info-index">
-          
-              
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MyBatis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-                
-
-                  
-                    <p class="article-more-link">
-                      <a class="article-more-a" href="/2021/09/29/929%E5%AF%B9%E4%BA%8EMybatis%E7%9A%84%E6%B3%A8%E6%84%8F/">
-                        展开全文 >>
-                      </a>
-                    </p>
-                    
-
-                      
-                            <div class="clearfix"></div>
-        </div>
-  </div>
-</article>
-
-      <aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-        
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1323,7 +1329,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
         </div>
           <nav style="margin:20px 0 0 20px;color:rgb(77, 89, 100);">
-            <span>总文章数： <strong>65</strong></span>
+            <span>总文章数： <strong>67</strong></span>
           </nav>
         <div class="widget tagcloud search-tag">
           <p class="search-tag-wording">tag:</p>
@@ -1590,6 +1596,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
               </li>
             
             <div class="clearfix"></div>
