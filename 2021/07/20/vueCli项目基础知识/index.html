@@ -16,7 +16,7 @@
 <meta property="og:description" content="数组拼接成字符串使用 join 函数,如 tests 数组拼接成test 1test &#x3D; tests.join(&amp;#x27; &amp;#x27;)  括号内定义拼接的符号   全局定义日期过滤器（根据秒数）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-19T18:31:57.000Z">
-<meta property="article:modified_time" content="2021-09-03T12:18:08.000Z">
+<meta property="article:modified_time" content="2022-01-13T14:06:11.482Z">
 <meta property="article:author" content="FSAN-san">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="VueCli">
@@ -335,11 +335,401 @@
 <ul>
 <li>main 中添加 axios 拦截器，在 request 拦截器中，展示进度条 NProgress.start()<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.request.use(config =&gt;&#123;</span><br><span class="line">  NProgress.start()</span><br><span class="line">  return config</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="图片的遍历和存放地址——————戴学长的指导"><a href="#图片的遍历和存放地址——————戴学长的指导" class="headerlink" title="图片的遍历和存放地址——————戴学长的指导"></a>图片的遍历和存放地址——————戴学长的指导</h2><blockquote>
-<p>图片存放的位置</p>
+<h2 id="自定义标签数据"><a href="#自定义标签数据" class="headerlink" title="自定义标签数据"></a>自定义标签数据</h2><p>在一个标签上写上自己的属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button data-myData=&quot;123&quot; @click=&quot;eventTest&quot;&gt;点我发送事件对象&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>data-  固定结构，后面跟上名字和值</li>
+<li>这里的函数默认传了一个$event，要传多个参数这样写eventTest($event, “123”)</li>
+</ul>
+<p>通过事件获取对象中的target下dataset获取值</p>
+<h2 id="一次触发多个方法"><a href="#一次触发多个方法" class="headerlink" title="一次触发多个方法"></a>一次触发多个方法</h2><p>vue里面是可以点击一个按钮触发多个的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=&quot;test1(),test2(),test3()&quot;&gt;触发多个&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使默认事件失效"><a href="#使默认事件失效" class="headerlink" title="使默认事件失效"></a>使默认事件失效</h2><blockquote>
+<p>方法一：</p>
 </blockquote>
-<p>图片路径在使用的时候会被node编译，但把图片的地址放在data中就不会编译，这时候使用for循环路径的时候，就会出现感觉地址正确又没找到图片。因为vue项目启动的时候页面就是public下的index.html</p>
-<p>解决：使用</p>
+<p>在事件对象上使用对应方法实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;http://www.baidu.com&quot; target=&quot;_blank&quot; @click=&quot;noHref($event)&quot;&gt;跳转测试&lt;/a&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">noHref (e) &#123;</span><br><span class="line">	e.preventDefault()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>target=”_blank” 在新标签页打开</li>
+</ul>
+<br>
+
+<blockquote>
+<p><strong>方法二：使用事件修饰符</strong></p>
+</blockquote>
+<p>直接在点击事件旁边加上prevent</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;http://www.baidu.com&quot; target=&quot;_blank&quot; @click.prevent=&quot;noHref()&quot;&gt;跳转测试&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以上两个方法都可以使超链接的跳转失效</p>
+<h2 id="监听键盘的输入"><a href="#监听键盘的输入" class="headerlink" title="监听键盘的输入"></a>监听键盘的输入</h2><blockquote>
+<p>方法一：</p>
+</blockquote>
+<p>使用@keyup  @keydown获取元素对象，再通过对象的key属性获取对应按键的信息(不推荐使用keycode)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; @keyup=&quot;inputUp($event)&quot;&gt;</span><br><span class="line"></span><br><span class="line">inputUp (e) &#123;</span><br><span class="line">	console.log(e.key)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<blockquote>
+<p><strong>方法二：使用按键修饰符</strong></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; @keyup.enter=&quot;inputUp1&quot;&gt;</span><br><span class="line"></span><br><span class="line">inputUp1 () &#123;</span><br><span class="line">	console.log(&#x27;ok!&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在keyup上直接指定触发的条件即可</li>
+<li>enter 回车</li>
+<li>tab</li>
+<li>delete (同时捕获删除键和退格键)</li>
+<li>esc</li>
+<li>space</li>
+<li>up</li>
+<li>down</li>
+<li>left</li>
+<li>right</li>
+</ul>
+<h2 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h2><p>使用computed节点，可以实现实时的更改，只要里面用到的属性发生变化就会内部调用一次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; @keyup.enter=&quot;inputUp1&quot; v-model=&quot;value&quot;&gt;</span><br><span class="line">处理后的数据为：&#123;&#123;getAllUrl&#125;&#125;</span><br><span class="line"></span><br><span class="line">computed: &#123;</span><br><span class="line">	getAllUrl () &#123;</span><br><span class="line">		return this.value.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用的方法和methods节点一样，但必须要有return</li>
+<li>上面作用是将input输入框中的字符翻转，先使用split分割，然后再reverse翻转，最后拼接起来</li>
+</ul>
+<blockquote>
+<p>小目标：（利用计算属性，写一个检索功能）</p>
+</blockquote>
+<p>一个input输入框，下面一个ul列表，在输入框中输入数据的时候，按下回车检索数据，ul中显示数据</p>
+<p>实现思路：</p>
+<ol>
+<li>input双向绑定一个值，ul中li的数据来自数组遍历</li>
+<li>计算属性方法中遍历数据为字符串，然后使用indexof查询字符串中是否有input绑定的字符，有的话就添加到一个数组中并返回</li>
+<li>在ul中遍历渲染计算属性，由于input绑定值为空，所以第一次渲染了全部</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div style=&quot;display: flex;justify-content: center;&quot;&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; placeholder=&quot;请输入查找内容&quot; v-model=&quot;value&quot;&gt;</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">          &lt;li v-for=&quot;(value,index) in getData&quot; :key=&quot;index&quot;&gt;&#123;&#123;value&#125;&#125;&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;SearchDemo&#x27;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      value: &#x27;&#x27;,</span><br><span class="line">      listData: [&#x27;FSAN&#x27;, &#x27;qixin&#x27;, &#x27;demo&#x27;, &#x27;zhangsan&#x27;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    getData () &#123;</span><br><span class="line">      const nowData = []</span><br><span class="line">      this.listData.forEach(item =&gt; &#123;</span><br><span class="line">        if (item.indexOf(this.value) !== -1) &#123;</span><br><span class="line">          nowData.push(item)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">      return nowData</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>indexOf 查询字符串中字符的下标，无查询结果为-1，有就为下标</li>
+</ul>
+<h2 id="watch监听属性"><a href="#watch监听属性" class="headerlink" title="watch监听属性"></a>watch监听属性</h2><p>使用watch监听属性的时候，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">	demo: function (beforeDemo) &#123;</span><br><span class="line">		// 要做的事</span><br><span class="line">		console.log(&quot;改变之后为：&quot; + beforeDemo)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里demo是被监听的属性，发生改变之后自动执行后面的函数</li>
+</ul>
+<p>简写为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">	demo (beforeDemo) &#123;</span><br><span class="line">		// 要做的事</span><br><span class="line">		console.log(&quot;改变之后为：&quot; + beforeDemo)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<blockquote>
+<p>小任务：（输入姓和名，自动拼接成姓名）</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div style=&quot;display: flex;justify-content: center;align-items: center;height: 700px&quot;&gt;</span><br><span class="line">    &lt;div style=&quot;line-height: 30px&quot;&gt;</span><br><span class="line">      &lt;div&gt;&lt;input type=&quot;text&quot; v-model=&quot;firstName&quot; placeholder=&quot;firstName&quot;&gt;&lt;/div&gt;</span><br><span class="line">      &lt;div&gt;&lt;input type=&quot;text&quot; v-model=&quot;lastName&quot; placeholder=&quot;lastName&quot;&gt;&lt;/div&gt;</span><br><span class="line">      &#123;&#123;nowName&#125;&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;watchDemo&#x27;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      firstName: &#x27;&#x27;,</span><br><span class="line">      lastName: &#x27;&#x27;,</span><br><span class="line">      nowName: &#x27;&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    firstName (firstName) &#123;</span><br><span class="line">      this.nowName = firstName + &#x27; &#x27; + this.lastName</span><br><span class="line">    &#125;,</span><br><span class="line">    lastName (lastName) &#123;</span><br><span class="line">      this.nowName = this.firstName + &#x27; &#x27; + lastName</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用props子父组件传参"><a href="#使用props子父组件传参" class="headerlink" title="使用props子父组件传参"></a>使用props子父组件传参</h2><p><strong>子组件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1 style=&quot;text-align: center&quot;&gt;公共部分：参数为&#123;&#123;title?title:&#x27;PropsTest&#x27;&#125;&#125;&lt;/h1&gt;</span><br><span class="line">  &lt;div style=&quot;text-align: center&quot;&gt;数据为：&#123;&#123;data&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;PropsTest&#x27;,</span><br><span class="line">  props: [&#x27;title&#x27;, &#x27;data&#x27;]</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>父组件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;PropsTest title=&quot;propsDemo&quot; :data=&quot;data&quot;&gt;&lt;/PropsTest&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import PropsTest from &#x27;./PropsTest&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;propsDemo&#x27;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      data: [</span><br><span class="line">        &#123;</span><br><span class="line">          name: &#x27;FSAN&#x27;,</span><br><span class="line">          age: 19</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          name: &#x27;FSAN&#x27;,</span><br><span class="line">          age: 19</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    PropsTest</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用vue3时，模板里面不需要写根标签，vue2则要先写div</li>
+</ul>
+<p>思路：</p>
+<ol>
+<li>父组件中先导入子组件并注册为标签</li>
+<li>在标签中写的属性值可以在子组件中使用props节点拿取</li>
+</ol>
+<p><strong>props另一种拿取方式如下（定义拿取的数据类型，如不对则会在控制台出现warning）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">props: &#123;</span><br><span class="line">  title: String,</span><br><span class="line">  data: Array</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="子组件使用emit执行父组件的方法"><a href="#子组件使用emit执行父组件的方法" class="headerlink" title="子组件使用emit执行父组件的方法"></a>子组件使用emit执行父组件的方法</h2><p>父组件在使用子组件标签的时候，先利用@一个自定义事件名，子组件就可以使用this.$emit(事件名, 事件参数)去调用</p>
+<p><strong>父：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;PropsTest title=&quot;propsDemo&quot; @getAge=&quot;age&quot; :data=&quot;data&quot;&gt;&lt;/PropsTest&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>子：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=&quot;getAgeByName&quot;&gt;点击执行父组件的getAge方法&lt;/button&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">getAgeByName () &#123;</span><br><span class="line">  this.$emit(&#x27;getAge&#x27;, &#x27;FSAN&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vue3新出的setup理解"><a href="#vue3新出的setup理解" class="headerlink" title="vue3新出的setup理解"></a>vue3新出的setup理解</h2><p>setup位于created 和beforeCreated之前,用于代替created 和beforeCreated,但是在setup函数里不能访问到this</p>
+<p>可以在setup中定义函数和属性，用法同data，method</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">setup () &#123;</span><br><span class="line">	<span class="keyword">const</span> demo = &#123;</span><br><span class="line">		<span class="attr">title</span>: <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> getTitie = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(demo.title)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		demo,</span><br><span class="line">		getTitle</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>setup内可以通过以下hook操作整个生命周期</p>
+<ol>
+<li>onBeforeMount</li>
+<li>onMounted</li>
+<li>onBeforeUpdate</li>
+<li>onUpdated</li>
+<li>onBeforeUnmount</li>
+<li>onUnmounted</li>
+<li>onErrorCaptured</li>
+<li>onRenderTracked</li>
+<li>onRenderTriggered</li>
+</ol>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="使用mitt插件"><a href="#使用mitt插件" class="headerlink" title="使用mitt插件"></a>使用mitt插件</h2><p>mitt插件可以实现非子夫组件的传值（使用类似socket，如一个页面中的两个子组件相互传值）</p>
+<p><strong>安装mitt</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S mitt</span><br></pre></td></tr></table></figure>
+
+<p><strong>导入：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mitt <span class="keyword">from</span> <span class="string">&#x27;mitt&#x27;</span></span><br><span class="line"><span class="keyword">const</span> myMitt = mitt()</span><br><span class="line"><span class="keyword">export</span> defult myMitt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用</p>
+</blockquote>
+<ol>
+<li>定义两个子组件，注册在一个父组件中</li>
+<li>两个子组件导入mitt</li>
+<li>使用emit发送，on监听</li>
+</ol>
+<p><strong>MittDemo:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div style=&quot;margin: auto;width: 500px&quot;&gt;</span><br><span class="line">    &lt;MittEmitDemo&gt;&lt;/MittEmitDemo&gt;</span><br><span class="line">    &lt;div&gt;------------下面是监听区域------------&lt;/div&gt;</span><br><span class="line">    &lt;MittOnDemo&gt;&lt;/MittOnDemo&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import MittEmitDemo from &#x27;./MittEmitDemo&#x27;</span><br><span class="line">import MittOnDemo from &#x27;./MittOnDemo&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;MittDemo&#x27;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    MittEmitDemo,</span><br><span class="line">    MittOnDemo</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>MittEmitDemo:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;button @click=&quot;send&quot;&gt;点击发送&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import mitt from &#x27;../uilts/getMitt&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;MittDemo&#x27;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    send () &#123;</span><br><span class="line">      mitt.emit(&#x27;hello&#x27;, Math.round(Math.random() * 100) + &#x27;demo&#x27;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>MittOnDemo:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;开始监听：请查看控制台&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import mitt from &#x27;../uilts/getMitt&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;MittOnDemo&#x27;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    mitt.on(&#x27;hello&#x27;, msg =&gt; &#123;</span><br><span class="line">      console.log(msg)</span><br><span class="line">    &#125;)</span><br><span class="line">    return &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用vue3中的reactive函数和ref函数"><a href="#使用vue3中的reactive函数和ref函数" class="headerlink" title="使用vue3中的reactive函数和ref函数"></a>使用vue3中的reactive函数和ref函数</h2><p><strong>区别：</strong></p>
+<p>reactive是将一个对象直接化为一个proxy对象，而ref则对reactive做了二次包装，将proxy对象放在包装后的value属性中</p>
+<p><strong>共同点：</strong></p>
+<p>都是将对象转化为响应式对象，对页面的实时更新</p>
+<blockquote>
+<p>reactive函数用法：</p>
+</blockquote>
+<ol>
+<li>导入</li>
+<li>传入对象</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p&gt;使用reactive创建的响应式对象&lt;/p&gt;</span><br><span class="line">  &lt;div&gt;我的名字是：&#123;&#123;my1.name&#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;我的名字是：&#123;&#123;my1.age&#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;button @click=&quot;change1&quot;&gt;使用reactive清空信息&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;NewVue3Com&#x27;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    const myObject1 = &#123;</span><br><span class="line">      name: &#x27;FSAN&#x27;,</span><br><span class="line">      age: &#x27;19&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">    const my1 = reactive(myObject1)</span><br><span class="line">    const change1 = () =&gt; &#123;</span><br><span class="line">      for (const my1Key in my1) &#123;</span><br><span class="line">        my1[my1Key] = &#x27;&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;</span><br><span class="line">      my1,</span><br><span class="line">      change1</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：在change1中不可使用my1 = {}（改const我试过了，不行的）</li>
+<li>但可以直接对属性进行操作，my1.name = ‘’</li>
+</ul>
+<br>
+
+<blockquote>
+<p>ref函数用法:</p>
+</blockquote>
+<ol>
+<li>导入</li>
+<li>传入属性</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p&gt;使用reactive创建的响应式对象&lt;/p&gt;</span><br><span class="line">  &lt;div&gt;我的名字是：&#123;&#123;my2.name&#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;我的名字是：&#123;&#123;my2.age&#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;button @click=&quot;change2&quot;&gt;使用ref清空信息&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;NewVue3Com&#x27;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    const myObject2 = &#123;</span><br><span class="line">      name: &#x27;FSAN&#x27;,</span><br><span class="line">      age: &#x27;20&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">    const my2 = ref(myObject2)</span><br><span class="line">    const change2 = () =&gt; &#123;</span><br><span class="line">      my2.value = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;</span><br><span class="line">      my2,</span><br><span class="line">      change2</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用ref函数的时候，就显得非常的方便</li>
+</ul>
+<h2 id="父子组件双向绑定"><a href="#父子组件双向绑定" class="headerlink" title="父子组件双向绑定"></a>父子组件双向绑定</h2><ol>
+<li>父组件中使用子组件的标签时加上v-model:属性名=’自身属性名’</li>
+<li>子组件中使用props接收父组件传来的属性名</li>
+<li>子组件在input标签上使用:value绑定属性实现单项传参</li>
+<li>子组件使用@input监听输入，input的值改变时，使用$emit的update更新自身的属性，因为父组件那边v-model已经双向绑定了，所以就实现了两个组件的双向绑定</li>
+</ol>
+<p><strong>子组件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  我是子组件</span><br><span class="line">  &lt;input type=&quot;text&quot; :value=&quot;cInputMsg&quot; @input=&quot;$emit(&#x27;update:cInputMsg&#x27;,$event.target.value)&quot; placeholder=&quot;请输入子组件的值&quot;&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;ChildrenDemo&#x27;,</span><br><span class="line">  props: [&#x27;cInputMsg&#x27;]</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>父组件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1 style=&quot;text-align: center&quot;&gt;父子组件的双向绑定&lt;/h1&gt;</span><br><span class="line">  &lt;div style=&quot;margin: auto;width: 400px&quot;&gt;</span><br><span class="line">    我是父组件</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;inputMsg&quot; placeholder=&quot;请输入父组件的值&quot;&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;ChildrenDemo v-model:cInputMsg=&quot;inputMsg&quot;&gt;&lt;/ChildrenDemo&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import ChildrenDemo from &#x27;./ChildrenDemo&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;ParaentDemo&#x27;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      inputMsg: &#x27;&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    ChildrenDemo</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>v-model可以写多个，绑定多个子组件</li>
+</ul>
+<h2 id="自定义一个按钮组件"><a href="#自定义一个按钮组件" class="headerlink" title="自定义一个按钮组件"></a>自定义一个按钮组件</h2><blockquote>
+<p>自定义按钮的文本：</p>
+</blockquote>
+<ol>
+<li>父组件注册子组件，在子组件标签中写上文本</li>
+<li>子组件中定义一个slot标签即可</li>
+</ol>
+<p><strong>父组件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;margin-top: 100px&quot;&gt;</span><br><span class="line">  &lt;h1 style=&quot;text-align: center&quot;&gt;自定义按钮&lt;/h1&gt;</span><br><span class="line">  &lt;MyButton&gt;提交&lt;/MyButton&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>子组件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;button style=&quot;background: orange;padding: 5px 10px&quot;&gt;</span><br><span class="line">      &lt;!--使用slot接收参数--&gt;</span><br><span class="line">      &lt;slot&gt;默认值&lt;/slot&gt;</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>slot标签中可以写上默认值，当父组件不传参的时候，显示默认值</li>
+</ul>
+<br>
+
+<blockquote>
+<p>自定义按钮的样式：</p>
+</blockquote>
+<ol>
+<li>在子组件中写上css样式代码</li>
+<li>在父组件中写上class或id即可，属性是可以直接继承的</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyButton class=&quot;warning&quot;&gt;提示&lt;/MyButton&gt;</span><br><span class="line">&lt;MyButton class=&quot;danger&quot;&gt;警告&lt;/MyButton&gt;</span><br><span class="line">&lt;MyButton&gt;默认&lt;/MyButton&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>按钮组件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button class=&quot;none&quot; style=&quot;padding: 5px 10px&quot;&gt;</span><br><span class="line">    &lt;!--使用slot接收参数--&gt;</span><br><span class="line">    &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;MyButton&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .warning &#123;</span><br><span class="line">    color: #f7f7f7 !important;</span><br><span class="line">    background: orange !important;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .danger &#123;</span><br><span class="line">    color: #f7f7f7 !important;</span><br><span class="line">    background: red !important;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .none &#123;</span><br><span class="line">    color: black;</span><br><span class="line">    background: #f7f7f7;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：在上面这种对按钮的渲染传值的时候，都是默认对根组件进行继承的，如果要指定继承对象看下面</li>
+</ul>
+<br>
+
+<blockquote>
+<p>选择组件继承属性对象</p>
+</blockquote>
+<ol>
+<li>设置inheritAttrs为false</li>
+<li>使用v-bind=”$attr”绑定继承对象，简写为:=”$attr”</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button class=&quot;none&quot; style=&quot;padding: 5px 10px&quot;&gt;</span><br><span class="line">    &lt;!--使用slot接收参数--&gt;</span><br><span class="line">    &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/button&gt;</span><br><span class="line">  &lt;div :=&quot;$attrs&quot;&gt;我是一个div&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;MyButton&#x27;,</span><br><span class="line">  inheritAttrs: false</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .warning &#123;</span><br><span class="line">    color: #f7f7f7 !important;</span><br><span class="line">    background: orange !important;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .danger &#123;</span><br><span class="line">    color: #f7f7f7 !important;</span><br><span class="line">    background: red !important;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .none &#123;</span><br><span class="line">    color: black;</span><br><span class="line">    background: #f7f7f7;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vue3中需要掌握的生命周期函数"><a href="#vue3中需要掌握的生命周期函数" class="headerlink" title="vue3中需要掌握的生命周期函数"></a>vue3中需要掌握的生命周期函数</h2><blockquote>
+<p>setup</p>
+</blockquote>
+<p>上面有</p>
+<blockquote>
+<p>beforeUpdate（数据更新之前）</p>
+</blockquote>
+<p>在更新data中的数据之前触发，可以用来记录改变之前的数据</p>
+<blockquote>
+<p>updated（数据更新之后）</p>
+</blockquote>
+<p>在更新了data中的数据后触发</p>
+<blockquote>
+<p>activated（keep-alive 缓存的组件激活时触发）</p>
+</blockquote>
+<p>使用keep-alive标签的内容，当销毁组件之后，不会触发销毁生命周期函数</p>
+<blockquote>
+<p>deactivated（keep-alive 缓存的组件停用时调用）</p>
+</blockquote>
+<p>利用这个判断组件的状态</p>
+<blockquote>
+<p>unmounted（实例销毁完成调用）</p>
+</blockquote>
+<p>替代了vue2中的destroyed周期函数</p>
+<blockquote>
+<p>beforeUnmount（实例销毁之前调用）</p>
+</blockquote>
+<p>一般用来在实例销毁前保存一些数据</p>
+<h2 id="写一个切换的功能栏"><a href="#写一个切换的功能栏" class="headerlink" title="写一个切换的功能栏"></a>写一个切换的功能栏</h2><p><strong>SmallAllDemoCom.vue</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div style=&quot;width: 900px;height:400px;margin: 0 auto;border: 1px solid #ccc&quot;&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &lt;li</span><br><span class="line">        style=&quot;display: inline-block;background: #eee;line-height: 40px;height: 40px;margin: 0 5px;padding: 0 20px;cursor: pointer&quot;</span><br><span class="line">        v-for=&quot;(value,index) in listData&quot; :key=&quot;index&quot; @click=&quot;nowDataIndex=index&quot;</span><br><span class="line">        :class=&quot;&#123;&#x27;active&#x27;:nowDataIndex===index&#125;&quot;&gt;</span><br><span class="line">        &#123;&#123;value.title&#125;&#125;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;div style=&quot;padding:20px 50px&quot;&gt;&#123;&#123;getNowData&#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;SmallAllDemoCom&#x27;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      nowDataIndex: 0,</span><br><span class="line">      listData: [</span><br><span class="line">        &#123;</span><br><span class="line">          title: &#x27;这是一的标题&#x27;,</span><br><span class="line">          data: &#x27;这是一的主体&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          title: &#x27;这是二的标题&#x27;,</span><br><span class="line">          data: &#x27;这是二的主体&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          title: &#x27;这是三的标题&#x27;,</span><br><span class="line">          data: &#x27;这是三的主体&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    getNowData () &#123;</span><br><span class="line">      return this.listData[this.nowDataIndex].data</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  deactivated () &#123;</span><br><span class="line">    console.log(&#x27;保存成功！&#x27;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .active, li:hover &#123;</span><br><span class="line">    background: red !important;</span><br><span class="line">    color: #fff;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用:class来实现动态的样式变化</li>
+<li>计算属性实时更新内容</li>
+</ul>
+<p><strong>smallAllDemo.vue</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div style=&quot;display: flex;justify-content: center;margin-bottom: 100px&quot;&gt;</span><br><span class="line">    &lt;button @click=&quot;isShow=!isShow&quot;&gt;打开/关闭功能栏&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;keep-alive&gt;</span><br><span class="line">    &lt;SmallAllDemoCom v-if=&quot;isShow&quot;&gt;&lt;/SmallAllDemoCom&gt;</span><br><span class="line">  &lt;/keep-alive&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import SmallAllDemoCom from &#x27;./SmallAllDemoCom&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;smallAllDemo&#x27;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      isShow: false</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    SmallAllDemoCom</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用keep-alive在功能栏关闭时记录状态到下次使用</li>
+</ul>
+<h2 id="this-nextTick-使代码在渲染整个视图之后执行"><a href="#this-nextTick-使代码在渲染整个视图之后执行" class="headerlink" title="this.$nextTick  使代码在渲染整个视图之后执行"></a>this.$nextTick  使代码在渲染整个视图之后执行</h2><p>有些值使需要动态获取的，通过dom拿取的时候就需要等待数据获取完毕并且渲染完毕之后才可以获取，就可以使用这个函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div ref=&quot;divRef&quot;&gt;测试$nextTick&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">setup () &#123;</span><br><span class="line">  const divRef = ref(null)</span><br><span class="line">  return &#123; divRef &#125;</span><br><span class="line">&#125;,</span><br><span class="line">mounted () &#123;</span><br><span class="line">  console.log(&#x27;不使用nextTick，值为\n&#x27; + this.divRef.innerText)</span><br><span class="line">  this.$nextTick(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;使用nextTick，值为\n&#x27; + this.divRef.innerText)</span><br><span class="line">  &#125;)</span><br><span class="line">  this.divRef.innerText = &#x27;我是改变后的值！&#x27;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里能使用this.divRef获取到div的对象是在setup中定义了响应式对象，绑定了div的ref属性</li>
+</ul>
+<h2 id="vue定义全局变量（原型对象）"><a href="#vue定义全局变量（原型对象）" class="headerlink" title="vue定义全局变量（原型对象）"></a>vue定义全局变量（原型对象）</h2><blockquote>
+<p>vue3：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createApp &#125; from &#x27;vue&#x27;</span><br><span class="line">import App from &#x27;./App.vue&#x27;</span><br><span class="line">import router from &#x27;./router&#x27;</span><br><span class="line">import axios from &#x27;axios&#x27;</span><br><span class="line"></span><br><span class="line">const app = createApp(App)</span><br><span class="line">app.config.globalProperties.$http = axios</span><br><span class="line">app.use(router).mount(&#x27;#app&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用app.config.globalProperties修改</li>
+</ul>
+<br>
+
+<blockquote>
+<p>vue2:</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import App from &#x27;./App.vue&#x27;</span><br><span class="line">import router from &#x27;./router&#x27;</span><br><span class="line">import axios from &#x27;axios&#x27;</span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = false</span><br><span class="line">Vue.prototype.$http = axios</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  router,</span><br><span class="line">  render: h =&gt; h(App)</span><br><span class="line">&#125;).$mount(&#x27;#app&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>productionTip 关闭生产模式下的提示，可以减小应用体积</li>
+<li>使用prototype修改</li>
+</ul>
+<h2 id="使用mixins抽离功能"><a href="#使用mixins抽离功能" class="headerlink" title="使用mixins抽离功能"></a>使用mixins抽离功能</h2><ol>
+<li>在script中自己写一个对象</li>
+<li>在暴露的对象中使用mixins添加即可，数组形式</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &#123;&#123;title&#125;&#125;</span><br><span class="line">  &lt;button @click=&quot;getTitle&quot;&gt;点击在控制台打印&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">const myData = &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      title: &#x27;mixins抽离功能&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    getTitle () &#123;</span><br><span class="line">      console.log(this.title)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;MixinDemo&#x27;,</span><br><span class="line">  mixins: [myData]</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以专门写一个js文件，导入之后使用mixins，方便属性多次调用</li>
+<li>当属性或方法与组件中的重复，最后调用的是组件的，就近原则</li>
+</ul>
+<h2 id="使用mixin函数定义全局功能"><a href="#使用mixin函数定义全局功能" class="headerlink" title="使用mixin函数定义全局功能"></a>使用mixin函数定义全局功能</h2><ol>
+<li>写一个js文件，暴露功能对象</li>
+<li>main.js接收，使用app.mixin()注册为全局的功能</li>
+</ol>
+<p><strong>mixinDemo.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myData = &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;mixins抽离功能&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    getTitle () &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">this</span>.title)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> myData</span><br></pre></td></tr></table></figure>
+
+<p><strong>main.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> mitt <span class="keyword">from</span> <span class="string">&#x27;mitt&#x27;</span></span><br><span class="line"><span class="keyword">import</span> myData <span class="keyword">from</span> <span class="string">&#x27;./mixin/mxinDemo&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = createApp(App)</span><br><span class="line">app.config.globalProperties.$mitt = mitt()</span><br><span class="line">app.use(router).mixin(myData).mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意这里导入了myData并使用了mixin函数</li>
+<li>支持使用链式编程</li>
+</ul>
+<h2 id="自定义dialog对话框组件"><a href="#自定义dialog对话框组件" class="headerlink" title="自定义dialog对话框组件"></a>自定义dialog对话框组件</h2><ol>
+<li>子组件中写好定位，准备接收两个参数，一个标题一个关闭状态</li>
+<li>子组件中点击关闭按钮时，使用$emit(‘update:’)更新父元素的状态属性</li>
+<li>父组件在传关闭状态时，需要使用v-model：发送</li>
+<li>slot做内容的扩展</li>
+</ol>
+<p><strong>DialogDemo.vue</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;button @click=&quot;openOrClose&quot;&gt;&#123;&#123;!dialogIsShow?&#x27;展开&#x27;:&#x27;关闭&#x27;&#125;&#125;对话框&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;DialogDemoCom title=&quot;自定义dialog对话框&quot; v-model:dialogVisible=&quot;dialogIsShow&quot; style=&quot;border-radius: 20px&quot;&gt;</span><br><span class="line">    123</span><br><span class="line">  &lt;/DialogDemoCom&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import DialogDemoCom from &#x27;./DialogDemoCom&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;DialogDemo&#x27;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      dialogIsShow: false</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    openOrClose () &#123;</span><br><span class="line">      this.dialogIsShow = !this.dialogIsShow</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    DialogDemoCom</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>DialogDemoCom.vue</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;teleport to=&quot;body&quot;&gt;</span><br><span class="line">    &lt;div v-if=&quot;dialogVisible?dialogVisible:false&quot;&gt;</span><br><span class="line">      &lt;div style=&quot;position: absolute;left: 0;top:0;width: 100%;height: 100%;background: rgba(0,0,0,0.6);&quot;&gt;&lt;/div&gt;</span><br><span class="line">      &lt;div</span><br><span class="line">        style=&quot;width: 500px;height: 350px;background: #fff;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);border-radius: 20px&quot;&gt;</span><br><span class="line">        &lt;div</span><br><span class="line">          style=&quot;height: 60px;background: #ccc;line-height: 60px;text-align: center;border-top-left-radius: 20px;border-top-right-radius: 20px&quot;&gt;</span><br><span class="line">        &lt;span style=&quot;position: absolute;right: 30px;cursor:pointer;font-weight: bold&quot;</span><br><span class="line">              @click=&quot;$emit(&#x27;update:dialogVisible&#x27;,false)&quot;&gt;X&lt;/span&gt;</span><br><span class="line">          &lt;h2&gt;&#123;&#123;title?title:&#x27;默认标题&#x27;&#125;&#125;&lt;/h2&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div style=&quot;padding: 20px&quot;&gt;</span><br><span class="line">          &lt;slot&gt;</span><br><span class="line">            显示默认内容</span><br><span class="line">          &lt;/slot&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/teleport&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;DialogDemoCom&#x27;,</span><br><span class="line">  props: [&#x27;title&#x27;, &#x27;dialogVisible&#x27;]</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">  * &#123;</span><br><span class="line">    margin: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="setup中watch和watchEffect"><a href="#setup中watch和watchEffect" class="headerlink" title="setup中watch和watchEffect"></a>setup中watch和watchEffect</h2><ol>
+<li>这些vue3的新api使用时需要先导入</li>
+<li>写法如下</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">setup () &#123;</span><br><span class="line">  <span class="keyword">const</span> data = reactive(&#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">num</span>: <span class="number">1</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">const</span> backDataAnd = computed(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> data.num + data.count</span><br><span class="line">  &#125;)</span><br><span class="line">  watch(data, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;使用setup中watch监听值为&#x27;</span> + data.count)</span><br><span class="line">  &#125;)</span><br><span class="line">  watchEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;watchEffect监听值为&#x27;</span> + data.num)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    data.count++</span><br><span class="line">    data.num++</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    data,</span><br><span class="line">    backDataAnd</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>watch先指定监听对象在写回调函数</li>
+<li>watchEffect直接写即可，会根据内容监听</li>
+</ul>
+<blockquote>
+<p>watch监听属性，前后的值</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">watch(<span class="function">() =&gt;</span> data.count, <span class="function">(<span class="params">val, oldVal</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;data.count从&#x27;</span> + oldVal + <span class="string">&#x27;变为：&#x27;</span> + val)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>区别：</strong></p>
+<ol>
+<li>watch可以监听到前后的值，watchEffect不行</li>
+<li>watch只有在监听值发生改变时才会执行，watchEffect默认执行一次</li>
+<li>watch需要自己传入监听对象，而watchEffect自己收集</li>
+</ol>
+<h2 id="provide和inject"><a href="#provide和inject" class="headerlink" title="provide和inject"></a>provide和inject</h2><p>在多层嵌套组件下，子组件中有子组件，这时父组件向孙组件传参可以使用provide和inject</p>
+<ol>
+<li>父组件使用provide传值</li>
+<li>孙组件导入inject，接收值即可</li>
+</ol>
+<blockquote>
+<p>provide传参</p>
+</blockquote>
+<p><strong>写法一：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">provide () &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;provide&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>写法二：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">provide: &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;provide&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>写法三：</strong></p>
+<ol>
+<li>导入provide</li>
+<li>在setup中使用，或其他地方</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; provide &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line">setup () &#123;</span><br><span class="line">  provide(<span class="string">&#x27;title&#x27;</span>, <span class="string">&#x27;provide&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>inject接收参数</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; inject &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">const</span> title = inject(<span class="string">&#x27;title&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
 
                       
                         
@@ -505,7 +895,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E6%8B%BC%E6%8E%A5%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.</span> <span class="toc-text">数组拼接成字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%AE%9A%E4%B9%89%E6%97%A5%E6%9C%9F%E8%BF%87%E6%BB%A4%E5%99%A8%EF%BC%88%E6%A0%B9%E6%8D%AE%E7%A7%92%E6%95%B0%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">全局定义日期过滤器（根据秒数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC"><span class="toc-number">3.</span> <span class="toc-text">在项目中使用路由跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2%E6%88%90%E6%95%B0%E7%BB%84"><span class="toc-number">4.</span> <span class="toc-text">字符串分割成数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">5.</span> <span class="toc-text">使用深拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-forEach-%E5%BE%AA%E7%8E%AF"><span class="toc-number">6.</span> <span class="toc-text">使用 forEach 循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9B%BE%E6%A0%87%E4%BE%9D%E8%B5%96%EF%BC%88ECharts%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">使用图标依赖（ECharts）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B6%E9%83%A8%E8%BF%9B%E5%BA%A6%E6%9D%A1%E5%8A%9F%E8%83%BD%EF%BC%88nporgress%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">顶部进度条功能（nporgress）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%9A%84%E9%81%8D%E5%8E%86%E5%92%8C%E5%AD%98%E6%94%BE%E5%9C%B0%E5%9D%80%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E6%88%B4%E5%AD%A6%E9%95%BF%E7%9A%84%E6%8C%87%E5%AF%BC"><span class="toc-number">9.</span> <span class="toc-text">图片的遍历和存放地址——————戴学长的指导</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E6%8B%BC%E6%8E%A5%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.</span> <span class="toc-text">数组拼接成字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%AE%9A%E4%B9%89%E6%97%A5%E6%9C%9F%E8%BF%87%E6%BB%A4%E5%99%A8%EF%BC%88%E6%A0%B9%E6%8D%AE%E7%A7%92%E6%95%B0%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">全局定义日期过滤器（根据秒数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC"><span class="toc-number">3.</span> <span class="toc-text">在项目中使用路由跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2%E6%88%90%E6%95%B0%E7%BB%84"><span class="toc-number">4.</span> <span class="toc-text">字符串分割成数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">5.</span> <span class="toc-text">使用深拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-forEach-%E5%BE%AA%E7%8E%AF"><span class="toc-number">6.</span> <span class="toc-text">使用 forEach 循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9B%BE%E6%A0%87%E4%BE%9D%E8%B5%96%EF%BC%88ECharts%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">使用图标依赖（ECharts）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B6%E9%83%A8%E8%BF%9B%E5%BA%A6%E6%9D%A1%E5%8A%9F%E8%83%BD%EF%BC%88nporgress%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">顶部进度条功能（nporgress）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E6%95%B0%E6%8D%AE"><span class="toc-number">9.</span> <span class="toc-text">自定义标签数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E6%AC%A1%E8%A7%A6%E5%8F%91%E5%A4%9A%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="toc-number">10.</span> <span class="toc-text">一次触发多个方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E9%BB%98%E8%AE%A4%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88"><span class="toc-number">11.</span> <span class="toc-text">使默认事件失效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E9%94%AE%E7%9B%98%E7%9A%84%E8%BE%93%E5%85%A5"><span class="toc-number">12.</span> <span class="toc-text">监听键盘的输入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7"><span class="toc-number">13.</span> <span class="toc-text">计算属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch%E7%9B%91%E5%90%AC%E5%B1%9E%E6%80%A7"><span class="toc-number">14.</span> <span class="toc-text">watch监听属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8props%E5%AD%90%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%8F%82"><span class="toc-number">15.</span> <span class="toc-text">使用props子父组件传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8emit%E6%89%A7%E8%A1%8C%E7%88%B6%E7%BB%84%E4%BB%B6%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">16.</span> <span class="toc-text">子组件使用emit执行父组件的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue3%E6%96%B0%E5%87%BA%E7%9A%84setup%E7%90%86%E8%A7%A3"><span class="toc-number">17.</span> <span class="toc-text">vue3新出的setup理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">18.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8mitt%E6%8F%92%E4%BB%B6"><span class="toc-number">19.</span> <span class="toc-text">使用mitt插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8vue3%E4%B8%AD%E7%9A%84reactive%E5%87%BD%E6%95%B0%E5%92%8Cref%E5%87%BD%E6%95%B0"><span class="toc-number">20.</span> <span class="toc-text">使用vue3中的reactive函数和ref函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A"><span class="toc-number">21.</span> <span class="toc-text">父子组件双向绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%8C%89%E9%92%AE%E7%BB%84%E4%BB%B6"><span class="toc-number">22.</span> <span class="toc-text">自定义一个按钮组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue3%E4%B8%AD%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="toc-number">23.</span> <span class="toc-text">vue3中需要掌握的生命周期函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E4%B8%80%E4%B8%AA%E5%88%87%E6%8D%A2%E7%9A%84%E5%8A%9F%E8%83%BD%E6%A0%8F"><span class="toc-number">24.</span> <span class="toc-text">写一个切换的功能栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#this-nextTick-%E4%BD%BF%E4%BB%A3%E7%A0%81%E5%9C%A8%E6%B8%B2%E6%9F%93%E6%95%B4%E4%B8%AA%E8%A7%86%E5%9B%BE%E4%B9%8B%E5%90%8E%E6%89%A7%E8%A1%8C"><span class="toc-number">25.</span> <span class="toc-text">this.$nextTick  使代码在渲染整个视图之后执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%EF%BC%88%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%EF%BC%89"><span class="toc-number">26.</span> <span class="toc-text">vue定义全局变量（原型对象）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8mixins%E6%8A%BD%E7%A6%BB%E5%8A%9F%E8%83%BD"><span class="toc-number">27.</span> <span class="toc-text">使用mixins抽离功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8mixin%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E5%8A%9F%E8%83%BD"><span class="toc-number">28.</span> <span class="toc-text">使用mixin函数定义全局功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89dialog%E5%AF%B9%E8%AF%9D%E6%A1%86%E7%BB%84%E4%BB%B6"><span class="toc-number">29.</span> <span class="toc-text">自定义dialog对话框组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setup%E4%B8%ADwatch%E5%92%8CwatchEffect"><span class="toc-number">30.</span> <span class="toc-text">setup中watch和watchEffect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#provide%E5%92%8Cinject"><span class="toc-number">31.</span> <span class="toc-text">provide和inject</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -533,7 +923,7 @@
 	<div class="outer">
 		<div id="footer-info">
 			<div class="footer-left">
-				&copy; 2021
+				&copy; 2022
 					FSAN-san
 			</div>
 			<div class="footer-right">
@@ -610,7 +1000,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
         </div>
           <nav style="margin:20px 0 0 20px;color:rgb(77, 89, 100);">
-            <span>总文章数： <strong>67</strong></span>
+            <span>总文章数： <strong>69</strong></span>
           </nav>
         <div class="widget tagcloud search-tag">
           <p class="search-tag-wording">tag:</p>
@@ -893,6 +1283,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">随手记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vuecli</a>
               </li>
             
             <div class="clearfix"></div>
